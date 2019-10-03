@@ -9,125 +9,156 @@ import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/styles';
 
 // react components
 import TablePaginationActions from './TablePaginationActions'
 
+// styles theme
+import style from './purchaseHistoryTheme.js'
 
 
-  class PurchaseHistoryTable extends React.Component {
-    constructor(props){
-      super(props)
-      this.state={
-        page:0,
-        rowsPerPage:5
-      }
-      this.rows = [
-        this.createData('Hiking in the Tatras', {time:'10:00', date:'25 May, 2019'}, 3, '120 $', 'Credit Card', 'In progress'),
-        this.createData('Hiking in the Tatras', {time:'10:00', date:'25 May, 2019'}, 3, '120 $', 'Credit Card', ['Successfully', 'Receipt']),
-        this.createData('Hiking in the Tatras', {time:'10:00', date:'25 May, 2019'}, 3, '120 $', 'Credit Card', 'Refunded'),
-        this.createData('Hiking in the Tatras', {time:'10:00', date:'25 May, 2019'}, 3, '120 $', 'Credit Card', ['Successfully', 'Receipt']),
-        this.createData('Hiking in the Tatras', {time:'10:00', date:'25 May, 2019'}, 3, '120 $', 'Credit Card', ['Successfully', 'Receipt']),
-      ]
-    }
-    createData = (event, date, quantity, totalPrice, paymentType, paymentStatus) => {
-      return { event, date, quantity, totalPrice, paymentType, paymentStatus };
-    }
-    handleChangePage = (event, newPage) => {
-      this.setState({...this.state, page: newPage});
 
-    }
+class PurchaseHistory extends React.Component {
   
-    handleChangeRowsPerPage = event => {
-      this.setState({...this.state, rowsPerPage: parseInt(event.target.value, 10)});
-      this.setState({...this.state, page: 0});
-      
+  constructor(props){
+
+    super(props)
+
+    this.state={
+      page: 0,
+      rowsPerPage: 5,
+      loading: false,
+      data: []
     }
-    render(){
-      const {page, rowsPerPage} = this.state
-      const emptyRows = rowsPerPage - Math.min(this.rowsPerPage, this.rows.length - this.page * this.rowsPerPage);
-      return(
-            <Paper>
-              <div>
-                <Table>                
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Event</TableCell>
-                      <TableCell>Date</TableCell>
-                      <TableCell>Quantity</TableCell>
-                      <TableCell>Total price</TableCell>
-                      <TableCell>Payment type</TableCell>
-                      <TableCell>Payment status</TableCell>
-                    </TableRow>
-                  </TableHead>
-
-                  <TableBody>
-                    {this.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row=>(
-                      <TableRow>
-                        <TableCell component='th' scope='row'>
-                          {row.event}
-                        </TableCell>
-                        <TableCell>
-                          <div className='date'>
-                            <span className='date__time'>{row.date.time}</span>
-                            <span className='date__date'>{row.date.date}</span>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          {row.quantity}
-                        </TableCell>
-                        <TableCell>
-                          {row.totalPrice}
-                        </TableCell>
-                        <TableCell>
-                          {row.paymentType}
-                        </TableCell>
-                        <TableCell>                          
-                          {
-                            Array.isArray(row.paymentStatus) ? 
-                            <div className='status'>
-                              <span className='date__reciept'>{ row.paymentStatus[1] }</span>
-                              <span className='status__result'>{ row.paymentStatus[0] }</span>
-                            </div>
-                            :
-                            row.paymentStatus
-                          }
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                    
-                    {emptyRows > 0 && (
-                      <TableRow style={{ height: 53 * emptyRows }}>
-                        <TableCell colSpan={6} />
-                      </TableRow>
-                    )}
-                  </TableBody>
-
-                  <TableFooter>
-                    <TableRow>
-                      <TablePagination
-                        rowsPerPageOptions={[5, 10, 25]}
-                        colSpan={3}
-                        count={this.rows.length}
-                        rowsPerPage={this.rowsPerPage}
-                        page={this.page}
-                        SelectProps={{
-                          inputProps: { 'aria-label': 'rows per page' },
-                          native: true,
-                        }}
-                        onChangePage={this.handleChangePage}
-                        onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                        ActionsComponent={TablePaginationActions}
-                      />
-                    </TableRow>
-                  </TableFooter>
-                </Table>
-              </div>
-            </Paper>
-
-      )
-    }
-    
   }
 
-  export default PurchaseHistoryTable;
+  componentWillMount(){
+    this.setState((state)=>{
+      return {...state, loading: true }
+    })
+
+    fetch('data.json')
+            .then(res=>res.json())
+            .then((data)=>{
+              this.setState((state)=>{
+                return {...state, data: data.rows, loading: false }
+              })
+            })
+  }
+
+  handleChangePage = (event, newPage) => {
+    this.setState({...this.state, page: newPage});
+
+  }
+
+  handleChangeRowsPerPage = event => {
+    this.setState({...this.state, rowsPerPage: parseInt(event.target.value)});
+  }
+
+  renderCell(field, item){
+    const { classes } = this.props
+
+    const simpleValues = ['event', 'quantity', 'totalPrice', 'paymentType']
+    let cell = null
+
+    if (simpleValues.includes(field)){
+        cell = <TableCell>{item[field]}</TableCell>
+    } else{
+      switch(field){
+
+        case 'date':
+            cell = <TableCell>
+            <div className={classes.date}>
+              <span className={classes.date__time}>{item.date.time}</span>
+              <span className={classes.date__date}>{item.date.date}</span>
+            </div>
+          </TableCell>
+        break
+
+        case 'paymentStatus':
+
+            let cellContent = Array.isArray(item.paymentStatus) ? 
+                <div className={classes.status}>
+                  <span className={classes.status__reciept}>{ item.paymentStatus[1] }</span>
+                  <span className={classes.status__result}>{ item.paymentStatus[0] }</span>
+                </div>
+                :
+                item.paymentStatus
+
+            cell = <TableCell>{cellContent}</TableCell>
+        break
+
+        default: cell = null
+
+      }
+    }
+
+    return cell
+  }
+
+  renderRows(data, rowsPerPage, page) {
+
+    const schema = ['event', 'date', 'quantity', 'totalPrice', 'paymentType', 'paymentStatus']
+    const { classes } = this.props
+
+    return data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((d, i) => 
+      (
+        <TableRow className={classes.row} key = {i}>
+          {schema.map(field => { return this.renderCell(field, d)})}
+        </TableRow>
+      ))
+  }
+  render(){
+    const {page, data} = this.state
+    let {rowsPerPage} = this.state
+    const { classes } = this.props
+    console.log(data)
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+    return(
+          <Paper>
+            <div>
+              <Table>                
+                <TableHead>
+                  <TableRow className={classes.row}>
+                  {['Event','Date', 'Quantity', 'Total price', 'Payment type', 'Payment status'].map(i=><TableCell>{i}</TableCell>)}
+                  </TableRow>
+                </TableHead>
+
+                <TableBody>
+                  {this.renderRows(data, rowsPerPage, page)}
+                  {emptyRows > 0 && (
+                    <TableRow className={classes.row} style={{ height: 53 * emptyRows }}>
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
+                </TableBody>
+
+                <TableFooter>
+                  <TableRow className={classes.row}>
+                  <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    colSpan={3}
+                    count={data.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    SelectProps={{
+                      inputProps: { 'aria-label': 'rows per page' },
+                      native: true,
+                    }}
+                    onChangePage={this.handleChangePage}
+                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                    ActionsComponent={TablePaginationActions}
+                  />
+                  </TableRow>
+                </TableFooter>
+              </Table>
+            </div>
+          </Paper>
+
+    )
+  }
+  
+}
+
+  export default withStyles(style)(PurchaseHistory);
