@@ -1,0 +1,22 @@
+{
+    "selectedGoods": 
+        [
+            {
+                "title":"Hiking in the Tatras",
+                "eventType":"Event type", 
+                "imgsrc":"./logo192.png",
+                "time":"5 spots",
+                "pricePerHour":"24$ / spot",
+                "totalPrice":"120" 
+            },
+
+            {
+                "title":"Something else",
+                "eventType":"Event type",
+                "imgsrc":"./logo512.png", 
+                "time":"5 hours",
+                "pricePerHour":"24$ / hour",
+                "totalPrice":"120" 
+            }
+        ]
+}

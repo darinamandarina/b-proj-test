@@ -1,22 +1,22 @@
-import React from 'react';
+import React from 'react'
 
 // material-ui components and methods
-import Table from '@material-ui/core/Table';
-import TableHead from '@material-ui/core/TableHead';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableFooter from '@material-ui/core/TableFooter';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import { withStyles } from '@material-ui/styles';
+import Table from '@material-ui/core/Table'
+import TableHead from '@material-ui/core/TableHead'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableFooter from '@material-ui/core/TableFooter'
+import TablePagination from '@material-ui/core/TablePagination'
+import TableRow from '@material-ui/core/TableRow'
+import Paper from '@material-ui/core/Paper'
+import { withStyles } from '@material-ui/styles'
+import Typography from '@material-ui/core/Typography'
 
 // react components
 import TablePaginationActions from './TablePaginationActions'
 
 // styles theme
 import style from './purchaseHistoryTheme.js'
-
 
 
 class PurchaseHistory extends React.Component {
@@ -48,30 +48,38 @@ class PurchaseHistory extends React.Component {
   }
 
   handleChangePage = (event, newPage) => {
-    this.setState({...this.state, page: newPage});
+    this.setState({...this.state, page: newPage})
 
   }
 
   handleChangeRowsPerPage = event => {
-    this.setState({...this.state, rowsPerPage: parseInt(event.target.value)});
+    this.setState({...this.state, rowsPerPage: parseInt(event.target.value)})
   }
 
   renderCell(field, item){
     const { classes } = this.props
 
-    const simpleValues = ['event', 'quantity', 'totalPrice', 'paymentType']
+    const simpleValues = [ 'quantity', 'totalPrice', 'paymentType' ]
     let cell = null
 
     if (simpleValues.includes(field)){
         cell = <TableCell>{item[field]}</TableCell>
     } else{
       switch(field){
-
+        case 'event':
+            cell = <TableCell>
+              <div className={classes.event}>
+              <Typography variant="h6" className="event__name">{item.event.name}</Typography>
+              <span className="event__type">{item.event.type}</span>
+              </div>
+              </TableCell>
+        break
+        
         case 'date':
             cell = <TableCell>
             <div className={classes.date}>
-              <span className={classes.date__time}>{item.date.time}</span>
-              <span className={classes.date__date}>{item.date.date}</span>
+              <span className="date__time">{item.date.time}</span>
+              <span className="date__date">{item.date.date}</span>
             </div>
           </TableCell>
         break
@@ -113,12 +121,12 @@ class PurchaseHistory extends React.Component {
     const {page, data} = this.state
     let {rowsPerPage} = this.state
     const { classes } = this.props
-    console.log(data)
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage)
     return(
-          <Paper>
-            <div>
-              <Table>                
+          // <Paper>
+           <div className={classes.container}>
+            <Typography variant="h4" component="h1" className={classes.h1} >Purchase history</Typography>
+              <Table className={classes.table}>                
                 <TableHead>
                   <TableRow className={classes.row}>
                   {['Event','Date', 'Quantity', 'Total price', 'Payment type', 'Payment status'].map(i=><TableCell>{i}</TableCell>)}
@@ -134,11 +142,11 @@ class PurchaseHistory extends React.Component {
                   )}
                 </TableBody>
 
-                <TableFooter>
-                  <TableRow className={classes.row}>
+                <TableFooter> 
+                  <TableRow  colSpan={6}>
                   <TablePagination
+                    align="right"
                     rowsPerPageOptions={[5, 10, 25]}
-                    colSpan={3}
                     count={data.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
@@ -154,11 +162,11 @@ class PurchaseHistory extends React.Component {
                 </TableFooter>
               </Table>
             </div>
-          </Paper>
+          // </Paper>
 
     )
   }
   
 }
 
-  export default withStyles(style)(PurchaseHistory);
+  export default withStyles(style)(PurchaseHistory)

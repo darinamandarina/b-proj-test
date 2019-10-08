@@ -2,7 +2,7 @@
 "rows": 
     [
         {
-            "event":"Hiking in the Tatras", 
+            "event":{"name":"Hiking in the Tatras", "type":"Event type"}, 
             "date":{"time":"10:00", "date":"25 May, 2019"},
             "quantity":3,
             "totalPrice":"120 $", 
@@ -10,7 +10,7 @@
             "paymentStatus":"In progress"
         },
         {
-            "event":"Hiking in the Tatras", 
+            "event":{"name":"Hiking in the Tatras", "type":"Event type"},  
             "date":{"time":"10:00", "date":"25 May, 2019"},
             "quantity":3,
             "totalPrice":"120 $", 
@@ -19,7 +19,7 @@
         },
     
         {
-            "event":"Hiking in the Tatras", 
+            "event":{"name":"Hiking in the Tatras", "type":"Event type"},  
             "date":{"time":"10:00", "date":"25 May, 2019"},
             "quantity":3,
             "totalPrice":"120 $", 
@@ -28,7 +28,7 @@
         },
 
         {
-            "event":"Hiking in the Tatras", 
+            "event":{"name":"Hiking in the Tatras", "type":"Event type"},  
             "date":{"time":"10:00", "date":"25 May, 2019"},
             "quantity":3,
             "totalPrice":"120 $", 
@@ -37,7 +37,7 @@
         },
 
         {
-            "event":"Hiking in the Tatras", 
+            "event":{"name":"Hiking in the Tatras", "type":"Event type"},  
             "date":{"time":"10:00", "date":"25 May, 2019"},
             "quantity":3,
             "totalPrice":"120 $", 
@@ -45,7 +45,7 @@
             "paymentStatus":["Successfully", "Receipt"]
         },
         {
-            "event":"Hiking in the Tatras", 
+            "event":{"name":"Hiking in the Tatras", "type":"Event type"},  
             "date":{"time":"10:00", "date":"25 May, 2019"},
             "quantity":3,
             "totalPrice":"120 $", 
@@ -54,7 +54,7 @@
         },
 
         {
-            "event":"Hiking in the Tatras", 
+            "event":{"name":"Hiking in the Tatras", "type":"Event type"},  
             "date":{"time":"10:00", "date":"25 May, 2019"},
             "quantity":3,
             "totalPrice":"120 $", 
@@ -63,7 +63,7 @@
         },
     
         {
-            "event":"Hiking in the Tatras", 
+            "event":{"name":"Hiking in the Tatras", "type":"Event type"},  
             "date":{"time":"10:00", "date":"25 May, 2019"},
             "quantity":3,
             "totalPrice":"120 $", 
@@ -72,7 +72,7 @@
         },
 
         {
-            "event":"Hiking in the Tatras", 
+            "event":{"name":"Hiking in the Tatras", "type":"Event type"},  
             "date":{"time":"10:00", "date":"25 May, 2019"},
             "quantity":3,
             "totalPrice":"120 $", 
@@ -81,7 +81,7 @@
         },
 
         {
-            "event":"Hiking in the Tatras", 
+            "event":{"name":"Hiking in the Tatras", "type":"Event type"},  
             "date":{"time":"10:00", "date":"25 May, 2019"},
             "quantity":3,
             "totalPrice":"120 $", 
@@ -89,7 +89,7 @@
             "paymentStatus":["Successfully", "Receipt"]
         },
         {
-            "event":"Hiking in the Tatras", 
+            "event":{"name":"Hiking in the Tatras", "type":"Event type"},  
             "date":{"time":"10:00", "date":"25 May, 2019"},
             "quantity":3,
             "totalPrice":"120 $", 
@@ -98,7 +98,7 @@
         },
 
         {
-            "event":"Hiking in the Tatras", 
+            "event":{"name":"Hiking in the Tatras", "type":"Event type"},  
             "date":{"time":"10:00", "date":"25 May, 2019"},
             "quantity":3,
             "totalPrice":"120 $", 
@@ -107,7 +107,7 @@
         },
     
         {
-            "event":"Hiking in the Tatras", 
+            "event":{"name":"Hiking in the Tatras", "type":"Event type"},  
             "date":{"time":"10:00", "date":"25 May, 2019"},
             "quantity":3,
             "totalPrice":"120 $", 
@@ -116,7 +116,7 @@
         },
 
         {
-            "event":"Hiking in the Tatras", 
+            "event":{"name":"Hiking in the Tatras", "type":"Event type"},  
             "date":{"time":"10:00", "date":"25 May, 2019"},
             "quantity":3,
             "totalPrice":"120 $", 
@@ -125,7 +125,7 @@
         },
 
         {
-            "event":"Hiking in the Tatras", 
+            "event":{"name":"Hiking in the Tatras", "type":"Event type"},  
             "date":{"time":"10:00", "date":"25 May, 2019"},
             "quantity":3,
             "totalPrice":"120 $", 

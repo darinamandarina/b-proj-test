@@ -1,3 +1,11 @@
-.App {
-  text-align: center;
+.App{
+    background: #FFF;
+
+}
+li{
+    list-style-type:none;
+}
+ul{
+    display: flex;
+    justify-content: space-around;
 }
